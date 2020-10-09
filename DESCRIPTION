@@ -1,0 +1,14 @@
+Package: respondR
+Type: Package
+Title: R Markdown Template for Responses to Reviewers
+Version: 0.1.0
+Author: person("Phil", "Bouchet", , "pjbouchet@gmail.com", c("aut", "cre"))
+Maintainer: Phil Bouchet <pjbouchet@gmail.com>
+Description: This package provides an R Markdown template for writing responses to reviewers' comments on a submitted paper.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Imports: tidyverse, purrr, bookdown, magrittr, janitor, docxtractr, utils, rstudioapi
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0

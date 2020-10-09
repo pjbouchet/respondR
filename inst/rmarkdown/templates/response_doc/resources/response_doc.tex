@@ -1,0 +1,179 @@
+\documentclass[$if(fontsize)$$fontsize$$else$11pt$endif$,$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+
+%==============================================
+% Packages
+%============================================== 
+
+\usepackage{fancyhdr} % Headers and footers
+\usepackage{xcolor} % Custom colours
+\usepackage[scaled]{helvet} % Helvetica font
+\usepackage{titling}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage[compact, sf, bf]{titlesec}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[parfill]{parskip}
+\usepackage{amssymb} % Check marks
+\usepackage{pifont}
+
+%==============================================
+% Document layout
+%============================================== 
+
+% Allow support for highlighting (print code chunks)
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$ 
+
+% Margins
+
+\geometry{
+ a4paper,
+ total = {170mm, 257mm},
+ left = 20mm,
+ top = 50mm,
+ bottom = 5mm,
+ headsep = 30 mm
+ }
+
+% Space above header
+
+\setlength{\headsep}{20pt}
+\setlength{\parindent}{0pt}
+
+% Fonts and line spacing
+
+\renewcommand{\baselinestretch}{1.25} % Line spacing
+\renewcommand{\familydefault}{\sfdefault}
+
+% HEADER
+
+\setlength{\fboxsep}{7pt} % Margins within header banner
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{\pagestyle{fancy}}
+
+\lhead{\colorbox{darkcolour}{
+ \makebox[\dimexpr\textwidth-3\fboxsep][l]{\color{white}%
+    \bf{Response to reviewers}
+    \hfill
+ }
+}}
+
+%==============================================
+% Custom colours
+%============================================== 
+
+%\definecolor{darkcolour}{rgb}{0,0.404,0.608}
+%\definecolor{midcolour}{rgb}{0,0.48,0.72}
+%\definecolor{lightcolour}{rgb}{0.949,0.98,1}
+
+\definecolor{noaction}{rgb}{$colours.noaction.red$, $colours.noaction.green$, $colours.noaction.blue$}
+\definecolor{darkcolour}{rgb}{$colours.dark.red$, $colours.dark.green$, $colours.dark.blue$}
+\definecolor{midcolour}{rgb}{$colours.mid.red$, $colours.mid.green$, $colours.mid.blue$}
+\definecolor{lightcolour}{rgb}{$colours.light.red$, $colours.light.green$, $colours.light.blue$}
+
+\hypersetup{colorlinks, citecolor = midcolour, urlcolor = midcolour}
+
+
+%==============================================
+% Custom symbols
+%============================================== 
+
+\newcommand{\xmark}{\ding{55}}
+
+%==============================================
+% SECTIONS
+%============================================== 
+
+% Custom coloured sections
+
+\newdimen\parboxheight
+
+\setlength\parindent{0em}%
+\makeatletter
+\newcommand*{\org@iiiparbox}{}
+\let\org@iiiparbox\@iiiparbox
+\renewcommand*{\@iiiparbox}[2]{%
+  \ifx\relax#2%
+    \setlength{\parboxheight}{0pt}%
+  \else
+    \setlength{\parboxheight}{#2}%
+  \fi
+  \org@iiiparbox{#1}{#2}%
+}
+\makeatother
+  
+\newcommand{\colorsection}[1]{
+\vskip 15pt
+  \colorbox{lightcolour}{\parbox[][18pt][c]{\dimexpr\textwidth-2\fboxsep}{\bf\color{midcolour}\ #1}}
+  \vskip 15pt}
+
+\makeatletter
+\renewcommand{\section}{\colorsection}
+\makeatother
+
+%==============================================
+% TITLE PAGE
+%============================================== 
+
+% Define a new command to abbreviate author names
+
+\newcommand\abbre[2][v]{\def\theabbre{}%
+  \expandafter\justfirstCAPS#2 \relax\relax\if q#1\else\theabbre\fi%
+  \expandafter\def\csname\theabbre\endcsname{#2}}
+\makeatletter
+\def\justfirstCAPS#1#2 #3\relax{\ifnum`#1>`@\ifnum`#1<`[%
+  \protected@edef\theabbre{\theabbre#1}\fi\fi%
+  \if\relax#3\else\justfirstCAPS#3\relax\fi}
+\makeatother
+
+% Define a separator for author names
+% Note: In article class \author command is internally set as a tabular 
+% and \and finishes one tabular and starts another so a list of authors 
+% becomes a list of tabulars.
+
+\renewcommand\and{{,}}
+
+% Define a new command to abbreviate author names
+
+\title{$title$}
+\author{\bf{Authors:}$for(author)$\sf{ $author.familyname$ \abbre{$author.firstname$}}$sep$\and $endfor$}
+\newcommand{\journal}{\textbf{Journal: }$journal$}
+\newcommand{\manuscript}{\textbf{Manuscript ID: }$manuscript$}
+
+\makeatletter         
+\renewcommand\maketitle{
+{\raggedright
+{\bfseries \sffamily \fontsize{11.5}{13}\selectfont \@title }\\[1ex] 
+{\sffamily \fontsize{10.5}{12}\selectfont \journal }\\[0.2ex] 
+{\sffamily \fontsize{10.5}{12}\selectfont \@author}\\[0.2ex] 
+{\sffamily \fontsize{10.5}{12}\selectfont \manuscript}\\[4ex] 
+}} 
+\makeatother
+
+%==============================================
+% FOOTER
+%============================================== 
+
+\pagestyle{fancy}
+\rfoot{\sffamily\raisebox{-0.1cm}{\thepage}}
+\cfoot{}
+%\renewcommand{\footrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\sffamily\thepage} % except the center
+\renewcommand{\footrulewidth}{0pt}}
+
+%\fancyfoot[LE,RO]{\thepage}
+
+\begin{document}
+
+\maketitle
+\noindent
+$body$
+
+\end{document}
