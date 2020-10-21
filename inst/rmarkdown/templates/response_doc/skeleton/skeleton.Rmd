@@ -13,7 +13,7 @@ author:
   firstname: Matthew
 show_editor: true
 output:
-  resp2r::response:
+  respondR::response:
     keep_tex: yes
     toc: false
 editor_options: 
