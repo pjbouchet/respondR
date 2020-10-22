@@ -47,30 +47,21 @@ response_font <- "bold" # (or "italics" or "standard")
 highlight_textrevisions <- "standard" # (or "bold", "italics", "standard")
 text_unchanged <- "Text unchanged"
 newpage_sections <- FALSE
-```
-
-```{r include=FALSE}
-# ----------------------------------------
-# Initialisation
-# ----------------------------------------
-word.document <- respondR::create_doc()
+file.name <- NULL
+output.dir <- NULL
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = FALSE, cache = FALSE, messages = FALSE, warning = FALSE)
-# Make sure you have the latest versions of rmarkdown and bookdown installed
-# https://gitlab.com/hrbrmstr/docxtractr
 
 # Required libraries
-library(tidyverse)
-library(janitor)
-library(magrittr)
-library(docxtractr)
+library(tidyverse) # Packages for data science
+library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
+library(magrittr) # Pipe operators
+library(docxtractr) # Extract Data Tables and Comments from 'Microsoft' 'Word' Documents 
 library(respondR)
 
-# word.document <- respondR::initialise_doc()
-# word.document <- file.path(dirname(rstudioapi::getSourceEditorContext()$path), "response_template.docx")
-# word.document <- system.file("inst", "response_template.docx", package = "respondR")
+word.document <- respondR::create_doc(output.dir = output.dir, file.name = file.name)
 
 # Import response document (.docx)
 doc <- docxtractr::read_docx(path = word.document)
