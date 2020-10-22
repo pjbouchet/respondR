@@ -2,20 +2,22 @@
 % Please edit documentation in R/create_doc.R
 \name{create_doc}
 \alias{create_doc}
-\title{Copy the Microsoft Word template document}
+\title{Copy/find the Microsoft Word template document}
 \usage{
-create_doc(rstudio = TRUE, destination = NULL, file.name = NULL)
+create_doc(output.dir = NULL, file.name = NULL, rstudio = TRUE)
 }
 \arguments{
-\item{rstudio}{Logical. Whether the function is being called from within RStudio. Defaults to TRUE.}
+\item{output.dir}{Destination folder. If \code{rstudio = TRUE}, the file will be saved in the same directory as the current file. If \code{rstudio = TRUE} and \code{destination} is not specified, will default to the current working directory.}
 
-\item{destination}{Destination folder. If \code{rstudio = TRUE}, the file will be saved in the same directory as the current file. If \code{rstudio = TRUE} and \code{destination} is not specified, will default to the current working directory.}
+\item{file.name}{Name of the output file. If not specified, will default to \code{response_template.docx}.}
+
+\item{rstudio}{Logical. Whether the function is being called from within RStudio. Defaults to TRUE.}
 }
 \value{
 A LaTeX formatted string showing text differences when rendered.
 }
 \description{
-Copy the Microsoft Word template document
+Copy/find the Microsoft Word template document
 }
 \author{
 Phil J. Bouchet

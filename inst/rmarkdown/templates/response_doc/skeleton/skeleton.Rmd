@@ -1,5 +1,5 @@
 ---
-title: This is our awesome new paper
+title: This is the title of our awesome new paper
 journal: Methods in Science and Technology
 manuscript: MST-0589
 author:
@@ -11,7 +11,6 @@ author:
   firstname: PL
 - familyname: Webber
   firstname: Matthew
-show_editor: true
 output:
   respondR::response:
     keep_tex: yes
@@ -37,14 +36,12 @@ colours:
     blue: 0.5
 ---
 
+Many thanks for your thoughtful comments on our manuscript. Our responses are shown in bold font below.
 
 ```{r include=FALSE}
 # ----------------------------------------
 # Customisation options
 # ----------------------------------------
-respondR::initialise_template()
-word.document <- file.path(dirname(rstudioapi::getSourceEditorContext()$path), "response_template.docx")
-# word.document <- system.file("inst", "response_template.docx", package = "respondR")
 comment_font <- "standard" # (or "italics" or "bold")
 response_font <- "bold" # (or "italics" or "standard")
 highlight_textrevisions <- "standard" # (or "bold", "italics", "standard")
@@ -52,7 +49,12 @@ text_unchanged <- "Text unchanged"
 newpage_sections <- FALSE
 ```
 
-Many thanks for your thoughtful comments on our manuscript. Our responses are shown in bold font below.
+```{r include=FALSE}
+# ----------------------------------------
+# Initialisation
+# ----------------------------------------
+word.document <- respondR::initialise_doc()
+```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = FALSE, cache = FALSE, messages = FALSE, warning = FALSE)
@@ -64,6 +66,11 @@ library(tidyverse)
 library(janitor)
 library(magrittr)
 library(docxtractr)
+library(respondR)
+
+# word.document <- respondR::initialise_doc()
+# word.document <- file.path(dirname(rstudioapi::getSourceEditorContext()$path), "response_template.docx")
+# word.document <- system.file("inst", "response_template.docx", package = "respondR")
 
 # Import response document (.docx)
 doc <- docxtractr::read_docx(path = word.document)
