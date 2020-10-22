@@ -53,7 +53,7 @@ newpage_sections <- FALSE
 # ----------------------------------------
 # Initialisation
 # ----------------------------------------
-word.document <- respondR::initialise_doc()
+word.document <- respondR::create_doc()
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
