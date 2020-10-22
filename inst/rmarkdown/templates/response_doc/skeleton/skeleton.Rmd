@@ -177,7 +177,7 @@ for (i in 1:tbl_count) {
     }else{ 
       out <- compareSentences(sentence1 = tbl_txt[[i]][j, ]$txt_orig, 
                               sentence2 = tbl_txt[[i]][j, ]$txt_revised, 
-                              highlight_revisions = highlight_textrevisions)
+                              highlight_diff = highlight_textrevisions)
       if(out == "") out <- paste0("\"", out, "\"")
       revised_txt <- paste0("\\color{midcolour}\\textbf{", line_no, ": }", out)}
     
