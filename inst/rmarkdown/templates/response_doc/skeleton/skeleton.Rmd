@@ -78,9 +78,9 @@ tbl_txt <- purrr::map(.x = 1:tbl_count, .f = ~
 for(p in 1:(tbl_count - 1)){
   for(pp in 1:nrow(tbl_txt[[p]])){
     tbl_txt[[p]]$comment[pp] <- str_replace_all(string = tbl_txt[[p]]$comment[pp], 
-                                                pattern = "&", replacement = "\\&")
+                                                pattern = "&", replacement = "and")
     tbl_txt[[p]]$response[pp] <- str_replace_all(string = tbl_txt[[p]]$response[pp], 
-                                                pattern = "&", replacement = "\\&")}}
+                                                pattern = "&", replacement = "and")}}
 # References
 if(!tbl_txt[[tbl_count]][1]==""){
   biblio <- tbl_txt[[tbl_count]]
