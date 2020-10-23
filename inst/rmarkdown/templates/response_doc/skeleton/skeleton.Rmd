@@ -74,6 +74,13 @@ tbl_txt <- purrr::map(.x = 1:tbl_count, .f = ~
                         docxtractr::docx_extract_tbl(docx = doc, tbl_number = .x, header = TRUE) %>% 
                         janitor::clean_names(.))
 
+# Deal with special characters
+for(p in 1:(tbl_count - 1)){
+  for(pp in 1:nrow(tbl_txt[[p]])){
+    tbl_txt[[p]]$comment[pp] <- str_replace_all(string = tbl_txt[[p]]$comment[pp], 
+                                                pattern = "&", replacement = "\\&")
+    tbl_txt[[p]]$response[pp] <- str_replace_all(string = tbl_txt[[p]]$response[pp], 
+                                                pattern = "&", replacement = "\\&")}}
 # References
 if(!tbl_txt[[tbl_count]][1]==""){
   biblio <- tbl_txt[[tbl_count]]
