@@ -9,6 +9,6 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-Imports: tidyverse, purrr, bookdown, magrittr, janitor, docxtractr, utils, rstudioapi
+Imports: tidyverse, purrr, bookdown, magrittr, janitor, docxtractr, utils, rstudioapi, qdapRegex
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0

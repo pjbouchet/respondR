@@ -44,7 +44,7 @@ Many thanks for your thoughtful comments on our manuscript. Our responses are sh
 # ----------------------------------------
 comment_font <- "standard" # (or "italics" or "bold")
 response_font <- "bold" # (or "italics" or "standard")
-highlight_textrevisions <- "standard" # (or "bold", "italics", "standard")
+highlight_textrevisions <- "underline" # (or "bold", "italics", "standard")
 text_unchanged <- "Text unchanged"
 newpage_sections <- FALSE
 file.name <- NULL
@@ -166,9 +166,10 @@ for (i in 1:tbl_count) {
     if(tbl_txt[[i]][j, ]$txt_orig %in% c(not.applicable, "") & tbl_txt[[i]][j, ]$txt_revised %in% c(not.applicable, "")){
       revised_txt <- "\\vspace{-15pt}"
     }else{ 
-      out <- compareSentences(sentence1 = tbl_txt[[i]][j, ]$txt_orig, 
+      out <- compare_sentences(sentence1 = tbl_txt[[i]][j, ]$txt_orig, 
                               sentence2 = tbl_txt[[i]][j, ]$txt_revised, 
                               highlight_diff = highlight_textrevisions)
+      
       if(out == "") out <- paste0("\"", out, "\"")
       revised_txt <- paste0("\\color{midcolour}\\textbf{", line_no, ": }", out)}
     
