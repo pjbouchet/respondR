@@ -24,7 +24,7 @@ create_doc <- function(output.dir = NULL, file.name = NULL, rstudio = TRUE){
   filepath <- file.path(dir_path, file.name)
   
   # Make a copy of the template if necessary
-  if(file.exists(filepath)){ cat("A file with this name already exists. Using version on disk.")
+  if(file.exists(filepath)){ warning("A file with this name already exists. Using version on disk.")
   } else { file.copy(from = system.file("response_template.docx", package = "respondR"), 
               to = tolower(filepath), overwrite = FALSE)}
 
