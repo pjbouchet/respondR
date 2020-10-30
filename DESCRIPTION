@@ -12,3 +12,7 @@ ByteCompile: true
 Imports: tidyverse, purrr, bookdown, magrittr, janitor, docxtractr, utils, rstudioapi, qdapRegex
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
