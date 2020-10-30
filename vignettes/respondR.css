@@ -1,0 +1,98 @@
+.hljs-comment{color: #5a9262;
+    font-style: italic;}
+
+div.blue {background-color:#e6f0ff;
+border-radius: 5px;
+padding: 20px;}
+
+.citation {color: #106194;}
+
+.marginnote {color: #106194;}
+
+.hljs-string {color: #d28306;}
+
+.hljs-keyword {color: #dd7c11;
+    font-weight: bold;}
+
+.hljs-literal {color: #006599;}
+
+.hljs-number {color: #006599;}
+
+#metadata > ul{padding-left: 0px;}
+
+blockquote {font-size: 15px;
+border-left: 5px solid #3090c1;}
+
+body {font-size: 15px;}
+
+a, a:hover {color: #106194;
+    text-decoration: none;}
+
+.table {width: auto;
+    font-size: 13px;}
+
+pre{background-color: #f8f8f8;}
+
+.hljs-number {color: #d05c00;}
+
+.hljs-keyword {
+    color: #224a88;
+    font-weight: bold;
+}
+
+h4 {
+    padding-top: 1em;
+}
+
+.tocify {
+    width: 20%;
+    max-height: 90%;
+    overflow: auto;
+    margin-left: 2%;
+    position: fixed;
+    border: 0px solid #ccc;
+    webkit-border-radius: 0px;
+    moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #108fc1;
+    border-color: #108fc1;
+}
+
+h3{ margin-top: 1.5em;
+    margin-bottom: 1em;
+  font-size:22px;
+}
+
+.author{padding-top: 1em;}
+.date{padding-top: 0em;}
+
+.caption {
+      color: grey;
+      margin-bottom: 2em;
+      margin-top: 1.0em;
+      text-align: justify;
+}
+
+p{text-align: justify;}
+
+h2{
+    background-color: #e9f5f9;
+    color: #106194;
+    font-size: 18px;
+    padding: 0.3em 0em 0.3em 0.5em;
+}
+
+ul > li {
+      margin-bottom: 0.5em;
+}
+
+ul{padding-left: 1.2em;}
+
+.figure{
+  display: block;
+  margin: 0 auto;}

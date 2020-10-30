@@ -1,0 +1,100 @@
+---
+title: "Getting started with respondR"
+author:
+  affiliation: Centre for Research into Ecological & Environmental Modelling, University
+    of St Andrews
+  name: Phil J. Bouchet
+date: "`r Sys.Date()`"
+css: respondR.css
+csl: respondR.csl
+link-citations: yes
+bibliography: respondR.bib
+rmarkdown::html_vignette:
+  fig_caption: yes
+  toc: yes
+  toc_depth: 4
+vignette: >
+  %\VignetteIndexEntry{Getting started with respondR}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+This vignette illustrates the use of the `respondR` package for writing responses to peer-review comments.
+
+## Rationale
+
+Responding to comments on a manuscript is an essential yet sometimes daunting part of the peer-review process, particularly as clear and well-crafted responses are often tedious to formulate but can go a long way towards ensuring acceptance. `respondR` was designed to take away some of that strain by providing a user-friendly RMarkdown template that can produce professional-looking and consistently formatted response documents --- encouraging authors to focus on content rather than style.
+
+In particular, `respondR` conforms to best practice rules for academic peer-reviewing [@Noble2017], and facilitates the tasks of:
+
+-   Providing an overview of edits (Rule 1).
+-   Making the response self-contained (Rule 3).
+-   Using typography to assist reviewers and editors in navigating the response (Rule 6).
+-   Clearly identifying the changes made to the submitted draft (Rule 9).
+
+## Installation
+
+The package can be installed using the following command:
+
+``` {.r}
+# install.packages("remotes")
+remotes::install_github("pjbouchet/respondR")
+```
+
+`respondR` is built around two separate files:
+
+-   A Microsoft Word (.docx) document housing the content of the response.
+-   An RMarkdown document used for formatting.
+
+The idea is to write up responses to reviewer comments in Word using the provided template, and generate a formatted PDF document from within RStudio.
+
+**After installation, follow these simple steps:**
+
+-   In RStudio, go to File \> New File \> R Markdown \> From Template [Note: You may need to restart RStudio first.]
+-   Select the `Response to Reviewers` template from the list and click OK. This will create an Rmd file, populated with a default template.
+-   Save the file to disk.
+-   Knit the document by going to File \> Knit Document or clicking on the Knit icon in the top bar of the Rstudio editor and choosing Knit to response.
+
+This will generate a template Microsoft Word document entitled `response_template.docx` in the same directory as the current RMarkdown file (by default when using RStudio). If desired, users can specify a custom file name and output directory by replacing the appropriate values in the first R code chunk.
+
+## Writing responses
+
+The Word template consists of several tables, to be filled in by the authors. These are described below.
+
+By default, `respondR` assumes that the article was handled by a single editor and two reviewers, as indicated by the headers of the left-most columns of each table. If necessary, tables can be duplicated/deleted to increase/decrease the number of editors/reviewers.
+
+Other columns include:
+
+-   **Comment**: Reviewer comments.
+-   **Response**: Response(s) to reviewer comments.
+-   **Action**: Action taken to address the comment.
+
+`respondR` contains functions to compare two text inputs and find differences between them. This can be used to highlight revisions made on specific sentences or paragraphs.
+
+-   **Txt_orig**: Original text as it appeared in the submitted draft.
+-   **Line**: Line number.
+-   **Txt_revised**: Revised text, in response requested editorial changes.
+
+The last table in the template is a single-column table used for referencing, should any literature be cited within the response document. Users are free to rely on any Word-compatible reference management software of their choosing (e.g., Mendeley, Endnote, Zotero, PaperPile). Note, however, that references must be flattened before knitting as software-specific fields will otherwise be imported as text and will mess with the output.
+
+Once the response text is finalised, go back to RStudio and knit the RMarkdown file to generate a formatted PDF ready for submission to the journal.
+
+## Customisation options
+
+`respondR` offers a number of options for customising both the text and aesthetics of the final PDF.
+
+-   **Article metadata:** The YAML header includes fields to display the article title, author list, and manuscript ID. These can all be updated with the relevant details, as needed.
+-   **Colours:** The colours used for background elements and text fonts can be changed within the YAML header. These are expressed in RGB form, and are therefore given as vectors of three values for the red, green, and blue channels respectively. `dark` controls the background colour of the top banner ('Response to Reviewers') on the first page. `light` controls the background colours of all section titles. `mid` determines the text colour used for section titles, actions, and text edits. `noaction` defaults to a light grey font, and is used to areas where no changes were made in response to specific comments.
+
+In addition to this, the second R code chunk offers the below options:
+
+-   `include_summary`: When set to `TRUE`, the final response PDF will include a summary list of all edits on the first page, helping editors and reviewers assess at a glance the actions taken in response to the comments made.
+-   `comment_font`: Font used for comments. Set to `"standard"` by default for a normal font. Other values include `"italics"` and `"bold"`.
+-   `response_font`: Font used for the response text. Set to `"bold"` by default. Other values include `"italics"` and `"standard"`.
+-   `highlight_textrevisions`: Font style used to highlight text edits when the `Txt_orig` and `Txt_revised` . Set to `"underline"` by default. Other values include `"bold"`, `"italics"`, and `"standard"`.
+-   `text_unchanged`: "Text unchanged"
+-   `newpage_sections`: If set to `TRUE`, adds a page break between sections (e.g., between reviewers/editors).
+
+## References
