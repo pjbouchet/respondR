@@ -11,12 +11,6 @@ author:
   firstname: PL
 - familyname: Webber
   firstname: Matthew
-output:
-  respondR::response:
-    keep_tex: yes
-    toc: false
-editor_options: 
-  chunk_output_type: console
 colours:
   dark:
     red: 0
@@ -34,24 +28,36 @@ colours:
     red: 0.5
     green: 0.5
     blue: 0.5
+output:
+  respondR::response:
+    keep_tex: yes
+    toc: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 Many thanks for your thoughtful comments on our manuscript. Our responses are shown in bold font below.
 
 ```{r include=FALSE}
-# ----------------------------------------
-# Customisation options
-# ----------------------------------------
+# Can be customised
+file.name <- NULL
+output.dir <- NULL
+```
+
+```{r include=FALSE}
+# Can be customised
+include_summary <- TRUE
 comment_font <- "standard" # (or "italics" or "bold")
 response_font <- "bold" # (or "italics" or "standard")
 highlight_textrevisions <- "underline" # (or "bold", "italics", "standard")
 text_unchanged <- "Text unchanged"
 newpage_sections <- FALSE
-file.name <- NULL
-output.dir <- NULL
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
+
+# All code below this line should be left as is.
+
 knitr::opts_chunk$set(echo = FALSE, cache = FALSE, messages = FALSE, warning = FALSE)
 
 # Required libraries
@@ -108,34 +114,37 @@ not.applicable <- c("n/a", "na", "N/A", "NA", "Not applicable", "not applicable"
 #' ----------------------------------------
 # SUMMARY SECTION
 #' ----------------------------------------
-cat(paste0("\\section{Summary}"))
-
-# For each row in each table:
-for (i in 1:tbl_count) {
-  for(j in 1:nrow(tbl_txt[[i]])){
-    
-    # List action taken against each comment - and apply formatting
-     if(tbl_txt[[i]][j, ]$action %in% not.applicable){
-      action_main <- paste0("\\enspace \\xmark \\enspace ", text_unchanged)
-    }else if(tbl_txt[[i]][j, ]$action == ""){
-      action_main <- paste0("\\enspace\\checkmark \\enspace ", "No edits required")
-    }else{
-      action_main <- tbl_txt[[i]][j, ]$action
-      action_main <- paste0("\\enspace \\checkmark \\enspace ", action_main)}
-        
-    # Create appropriate label
-    if(header_names[i] %in% c("Editor", "Reviewer")){
-      if(n_editors==1) label <- paste0(substr(header_names[i], 1, 1), ".", j, " \\hspace{3.5pt} | ") else
-      label <- ""
+if(include_summary){
+  
+  cat(paste0("\\section{Summary}"))
+  
+  # For each row in each table:
+  for (i in 1:tbl_count) {
+    for(j in 1:nrow(tbl_txt[[i]])){
+      
+      # List action taken against each comment - and apply formatting
+      if(tbl_txt[[i]][j, ]$action %in% not.applicable){
+        action_main <- paste0("\\enspace \\xmark \\enspace ", text_unchanged)
+      }else if(tbl_txt[[i]][j, ]$action == ""){
+        action_main <- paste0("\\enspace\\checkmark \\enspace ", "No edits required")
       }else{
-      label <- c(seq_len(n_editors), seq_len(n_reviewers))[i]
-      label <- paste0(substr(header_names[i], 1, 1), label, ".", j, " | ")}
-    
-    # Print text
-    cat(label)
-    cat(paste0(action_main))
-    cat("\\newline")
-    cat("\\color{black}")
+        action_main <- tbl_txt[[i]][j, ]$action
+        action_main <- paste0("\\enspace \\checkmark \\enspace ", action_main)}
+      
+      # Create appropriate label
+      if(header_names[i] %in% c("Editor", "Reviewer")){
+        if(n_editors==1) label <- paste0(substr(header_names[i], 1, 1), ".", j, " \\hspace{3.5pt} | ") else
+          label <- ""
+      }else{
+        label <- c(seq_len(n_editors), seq_len(n_reviewers))[i]
+        label <- paste0(substr(header_names[i], 1, 1), label, ".", j, " | ")}
+      
+      # Print text
+      cat(label)
+      cat(paste0(action_main))
+      cat("\\newline")
+      cat("\\color{black}")
+    }
   }
 }
 
