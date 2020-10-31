@@ -43,58 +43,78 @@ The package can be installed using the following command:
 remotes::install_github("pjbouchet/respondR")
 ```
 
-`respondR` is built around two separate files:
+`respondR` is built around two core files:
 
--   A Microsoft Word (.docx) document housing the content of the response.
--   An RMarkdown document used for formatting.
+-   A **Microsoft Word (.docx)** document housing the content of the response.
+-   An **RMarkdown** document used for formatting.
 
-The idea is to write up responses to reviewer comments in Word using the provided template, and generate a formatted PDF document from within RStudio.
+The idea is to write up responses to reviewer comments in Word using the provided template, and subsequently generate a formatted PDF directly from within RStudio.
 
 **After installation, follow these simple steps:**
 
--   In RStudio, go to File \> New File \> R Markdown \> From Template [Note: You may need to restart RStudio first.]
--   Select the `Response to Reviewers` template from the list and click OK. This will create an Rmd file, populated with a default template.
--   Save the file to disk.
--   Knit the document by going to File \> Knit Document or clicking on the Knit icon in the top bar of the Rstudio editor and choosing Knit to response.
+-   **Step 1:** In RStudio, go to `File > New File > R Markdown > From Template` [Note: You may need to restart RStudio first].
+-   **Step 2:** Select the `Response to Reviewers` template from the list and click `OK`. This will create an Rmd file, populated with a default template.
+-   **Step 3:** Save the file to disk.
+-   **Step 4:** Knit the document by going to `File > Knit` Document or clicking on the `Knit` icon in the top bar of the Rstudio editor and choosing `Knit to response`.
 
-This will generate a template Microsoft Word document entitled `response_template.docx` in the same directory as the current RMarkdown file (by default when using RStudio). If desired, users can specify a custom file name and output directory by replacing the appropriate values in the first R code chunk.
+![Figure 1. Knitting the RMarkdown file.](respondr_fig1.png){width="500"}
+
+This will generate a Microsoft Word document entitled `response_template.docx` in the same directory as the current RMarkdown file (by default, when using RStudio). If desired, users can specify a file name and output directory by replacing the appropriate values in the first R code chunk, as shown below.
+
+![Figure 2. Custom file name and output directory.](respondr_fig2.png){width="450"}
 
 ## Writing responses
 
-The Word template consists of several tables, to be filled in by the authors. These are described below.
+The Word template consists of several tables, to be filled in by the authors.
 
-By default, `respondR` assumes that the article was handled by a single editor and two reviewers, as indicated by the headers of the left-most columns of each table. If necessary, tables can be duplicated/deleted to increase/decrease the number of editors/reviewers.
+Each table corresponds to either an **Editor** or a **Reviewer**. By default, `respondR` assumes that the article was handled by a single editor and two reviewers (meaning a total of three tables). The table type is indicated in the header of the left-most column. Tables can be copied/pasted or deleted as necessary to match the correct number of editors/reviewers on a specific article.
 
-Other columns include:
+The three main columns of each table are:
 
 -   **Comment**: Reviewer comments.
--   **Response**: Response(s) to reviewer comments.
--   **Action**: Action taken to address the comment.
 
-`respondR` contains functions to compare two text inputs and find differences between them. This can be used to highlight revisions made on specific sentences or paragraphs.
+-   **Response**: Response(s) to reviewer comments.
+
+-   **Action**: Action(s) taken to address reviewer comments.\
+
+    -   When no edits are required, leave this column blank.\
+    -   Set to `n/a`, `na`, `N/A`, `NA`, `Not applicable`, `not applicable`, or `Not Applicable` when the manuscript text has purposefully been left unchanged (e.g., because the authors disagree with a suggested edit).
+
+`respondR` also contains functions to compare text excerpts and identify differences between them. This can be used to highlight revisions made on specific sentences or paragraphs.
 
 -   **Txt_orig**: Original text as it appeared in the submitted draft.
 -   **Line**: Line number.
--   **Txt_revised**: Revised text, in response requested editorial changes.
+-   **Txt_revised**: Revised text.
 
-The last table in the template is a single-column table used for referencing, should any literature be cited within the response document. Users are free to rely on any Word-compatible reference management software of their choosing (e.g., Mendeley, Endnote, Zotero, PaperPile). Note, however, that references must be flattened before knitting as software-specific fields will otherwise be imported as text and will mess with the output.
+Finally, the last table in the template is a single-column table used for referencing, should any literature be cited within the response document. If none are used, this table should be left blank. Users are free to rely on any Word-compatible reference management software of their choosing (e.g., Mendeley, Endnote, Zotero, PaperPile). Note, however, that references must be flattened before knitting, as reference fields will otherwise be imported as text and will mess with the output.
 
 Once the response text is finalised, go back to RStudio and knit the RMarkdown file to generate a formatted PDF ready for submission to the journal.
 
 ## Customisation options
 
-`respondR` offers a number of options for customising both the text and aesthetics of the final PDF.
+`respondR` offers a number of options for customising the look and feel of the final PDF.
 
--   **Article metadata:** The YAML header includes fields to display the article title, author list, and manuscript ID. These can all be updated with the relevant details, as needed.
--   **Colours:** The colours used for background elements and text fonts can be changed within the YAML header. These are expressed in RGB form, and are therefore given as vectors of three values for the red, green, and blue channels respectively. `dark` controls the background colour of the top banner ('Response to Reviewers') on the first page. `light` controls the background colours of all section titles. `mid` determines the text colour used for section titles, actions, and text edits. `noaction` defaults to a light grey font, and is used to areas where no changes were made in response to specific comments.
+-   **Article metadata:** The YAML header includes fields to display the article title, author list, and manuscript ID. These should be fairly self-explanatory and can be updated as needed.
 
-In addition to this, the second R code chunk offers the below options:
+![Figure 3. Author list and manuscript details.](respondr_fig3.png){width="400"}
 
--   `include_summary`: When set to `TRUE`, the final response PDF will include a summary list of all edits on the first page, helping editors and reviewers assess at a glance the actions taken in response to the comments made.
--   `comment_font`: Font used for comments. Set to `"standard"` by default for a normal font. Other values include `"italics"` and `"bold"`.
+-   **Colour scheme:** The colours used for background elements and text fonts can be changed within the YAML header. These are expressed in Normalized decimal RGB form, and are given as vectors of three values between 0 and 1 for the red, green, and blue colour channels, respectively. There are many online colour pickers - a good one can be found at <https://doc.instantreality.org/tools/color_calculator/>.\
+
+    -   `dark` controls the background colour of the header ('Response to reviewers') shown on the first page.\
+    -   `light` controls the background colours of all section titles.\
+    -   `mid` controls the colour of the text used for section titles, actions, and text edits.
+
+    \- `noaction` defaults to a light grey font, which is used to identify areas where no changes were made in response to specific comments.
+
+![Figure 4. Custom colour scheme.](respondr_fig4.png){width="150"}
+
+In addition, the second R code chunk offers the below options:
+
+-   `include_summary`: When set to `TRUE`, the final response PDF will display a summary of all edits on the first page, to help assess the actions taken in response to reviewer comments 'at a glance'.
+-   `comment_font`: Font used for comments. Defaults to `"standard"` for a normal font. Other values include `"italics"` and `"bold"`.
 -   `response_font`: Font used for the response text. Set to `"bold"` by default. Other values include `"italics"` and `"standard"`.
--   `highlight_textrevisions`: Font style used to highlight text edits when the `Txt_orig` and `Txt_revised` . Set to `"underline"` by default. Other values include `"bold"`, `"italics"`, and `"standard"`.
--   `text_unchanged`: "Text unchanged"
+-   `highlight_textrevisions`: Font style used to highlight text edits when the `Txt_orig` and `Txt_revised` columns of the Word template are not empty. Set to `"underline"` by default. Other values include `"bold"`, `"italics"`, and `"standard"`.
+-   `text_unchanged`: Custom text to show when no edits were made on the original text. Defaults to: `"Text unchanged"`.
 -   `newpage_sections`: If set to `TRUE`, adds a page break between sections (e.g., between reviewers/editors).
 
 ## References
