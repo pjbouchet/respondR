@@ -35,12 +35,12 @@ The idea is to write up responses to reviewer comments in Word using the provide
 -   **Step 2:** Select the `Response to Reviewers` template from the list and click `OK`. This will create an Rmd file, populated with a default template.
 -   **Step 3:** Save the file to disk.
 -   **Step 4:** Knit the document by going to `File > Knit` Document or clicking on the `Knit` icon in the top bar of the Rstudio editor and choosing `Knit to response`.
--   **Step 5:** Fill in the Microsoft Word table template (see the [vignette]()).
+-   **Step 5:** Fill in the Microsoft Word table template (see the [vignette](https://pjbouchet.github.io/respondR/articles/respondR.html)).
 -   **Step 6:** Knit the Rmd file.
 
 **Final step:** Say "Abracadabra"!
 
-Further details on how to use the template are given in the package [vignette]().
+Further details on how to use the template are given in the package [vignette](https://pjbouchet.github.io/respondR/articles/respondR.html).
 
 ### Comments and bug reports
 
