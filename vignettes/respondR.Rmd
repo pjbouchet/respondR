@@ -46,7 +46,7 @@ remotes::install_github("pjbouchet/respondR")
 `respondR` is built around two core files:
 
 -   A **Microsoft Word (.docx)** document housing the content of the response.
--   An **RMarkdown** document used for formatting.
+-   An **RMarkdown** document (and LaTeX backend) used for formatting.
 
 The idea is to write up responses to reviewer comments in Word using the provided template, and subsequently generate a formatted PDF directly from within RStudio.
 
@@ -54,14 +54,17 @@ The idea is to write up responses to reviewer comments in Word using the provide
 
 -   **Step 1:** In RStudio, go to `File > New File > R Markdown > From Template` [Note: You may need to restart RStudio first].
 -   **Step 2:** Select the `Response to Reviewers` template from the list and click `OK`. This will create an Rmd file, populated with a default template.
+
+![Figure 1. Creating a new file.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_figure1.png?raw=true){width="400"}
+
 -   **Step 3:** Save the file to disk.
 -   **Step 4:** Knit the document by going to `File > Knit` Document or clicking on the `Knit` icon in the top bar of the Rstudio editor and choosing `Knit to response`.
 
-![Figure 1. Knitting the RMarkdown file.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_fig1.png?raw=true){width="500"}
+![Figure 2. Knitting the RMarkdown file.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_figure2.png?raw=true){width="500"}
 
 This will generate a Microsoft Word document entitled `response_template.docx` in the same directory as the current RMarkdown file (by default, when using RStudio). If desired, users can specify a file name and output directory by replacing the appropriate values in the first R code chunk, as shown below.
 
-![Figure 2. Custom file name and output directory.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_fig2.png?raw=true){width="450"}
+![Figure 3. Custom file name and output directory.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_figure3.png?raw=true){width="450"}
 
 ## Writing responses
 
@@ -96,7 +99,7 @@ Once the response text is finalised, go back to RStudio and knit the RMarkdown f
 
 -   **Article metadata:** The YAML header includes fields to display the article title, author list, and manuscript ID. These should be fairly self-explanatory and can be updated as needed.
 
-![Figure 3. Author list and manuscript details.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_fig3.png?raw=true){width="400"}
+![Figure 4. Author list and manuscript details.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_figure4.png?raw=true){width="400"}
 
 -   **Colour scheme:** The colours used for background elements and text fonts can be changed within the YAML header. These are expressed in Normalized decimal RGB form, and are given as vectors of three values between 0 and 1 for the red, green, and blue colour channels, respectively. There are many online colour pickers - a good one can be found at <https://doc.instantreality.org/tools/color_calculator/>.\
 
@@ -106,7 +109,7 @@ Once the response text is finalised, go back to RStudio and knit the RMarkdown f
 
     \- `noaction` defaults to a light grey font, which is used to identify areas where no changes were made in response to specific comments.
 
-![Figure 4. Custom colour scheme.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_fig4.png?raw=true){width="150"}
+![Figure 5. Custom colour scheme.](https://github.com/pjbouchet/respondR/blob/main/vignettes/respondr_figure5.png?raw=true){width="150"}
 
 In addition, the second R code chunk offers the below options:
 

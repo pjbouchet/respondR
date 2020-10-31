@@ -25,7 +25,7 @@ remotes::install_github("pjbouchet/respondR")
 `respondR` is built around two core files:
 
 -   A **Microsoft Word (.docx)** document housing the content of the response.
--   An **RMarkdown** document used for formatting.
+-   An **RMarkdown** document (and LaTeX backend) used for formatting.
 
 The idea is to write up responses to reviewer comments in Word using the provided template, and subsequently generate a formatted PDF directly from within RStudio.
 
