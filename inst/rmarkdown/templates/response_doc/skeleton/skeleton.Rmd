@@ -171,7 +171,7 @@ for (i in 1:tbl_count) {
     
     # list action taken in response to reviewer comment
     if(tbl_txt[[i]][j, ]$action %in% not.applicable){
-      action_txt <- paste0("\\color{noaction} \\textbf{Action: } ", text_unchanged, " \\xmark")
+      action_txt <- paste0("\\color{noaction} \\textbf{Action: }", text_unchanged, " \\xmark")
     }else if(tbl_txt[[i]][j, ]$action == ""){
       action_txt <- paste0("\\color{midcolour} \\textbf{Action: }No edits required")
     }else{
