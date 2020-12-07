@@ -273,7 +273,7 @@ for (i in 1:tbl_count) {
     cat("\\vspace{5pt}")
     cat("\\newline")
     cat(paste0(response_txt, tbl_txt[[i]]$response[j], "\\normalfont"))
-    cat("\\par")
+    cat("\\par ")
     cat(paste0(action_txt))
     cat("\\color{black}")
     cat("\\newline")
