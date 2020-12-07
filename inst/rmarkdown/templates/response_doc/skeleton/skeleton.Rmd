@@ -227,6 +227,7 @@ for (i in 1:tbl_count) {
     
     # Define line number if present
     line_no <- ifelse(tbl_txt[[i]][j, ]$line == "", "", paste0("L", tbl_txt[[i]][j, ]$line))
+    # line_edits <- ifelse(tbl_txt[[i]][j, ]$line=="", "Edits", line_no)
     line_edits <- ifelse(tbl_txt[[i]][j, ]$line=="", "Edits", line_no)
     
     action_txt <- tbl_txt[[i]][j, ]$action
@@ -267,9 +268,9 @@ for (i in 1:tbl_count) {
     if(response_font == "italics") response_txt <- "\\uline{Response:} \\em "
     if(response_font == "standard") response_txt <- "\\uline{Response:} "
 
-    if(comment_font == "standard") comment_txt <- paste0(substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, " ", tbl_txt[[i]]$comment[j])
-    if(comment_font == "bold") comment_txt <- paste0("\\textbf{", substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, " ", tbl_txt[[i]]$comment[j], "}")
-    if(comment_font == "italics") comment_txt <- paste0("\\textit{", substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, " ", tbl_txt[[i]]$comment[j], "}")
+    if(comment_font == "standard") comment_txt <- paste0(substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, ". ", tbl_txt[[i]]$comment[j])
+    if(comment_font == "bold") comment_txt <- paste0("\\textbf{", substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, ". ", tbl_txt[[i]]$comment[j], "}")
+    if(comment_font == "italics") comment_txt <- paste0("\\textit{", substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, ". ", tbl_txt[[i]]$comment[j], "}")
     
     # Print
     cat(section_txt)
