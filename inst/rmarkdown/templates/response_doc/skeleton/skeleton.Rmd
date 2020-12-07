@@ -34,6 +34,7 @@ output:
     toc: false
 editor_options: 
   chunk_output_type: console
+classoption: table
 ---
 
 The work presented in our manuscript is the reflection of a strongly collaborative effort from numerous partner institutions (and individuals) over multiple years, and we are very pleased that both reviewers deemed it to be of value. We are grateful to them for their critical evaluation of the paper and the positive and constructive feedback they provided. Our responses to each of their individual comments are shown below. Note that line numbers refer to the original submission, not the revised manuscript.
@@ -51,7 +52,7 @@ comment_font <- "standard" # (or "italics" or "bold")
 response_font <- "bold" # (or "italics" or "standard")
 highlight_textrevisions <- "underline" # (or "bold", "italics", "standard")
 text_unchanged <- "Text unchanged"
-newpage_sections <- FALSE
+newpage_sections <- TRUE
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -129,7 +130,7 @@ if(include_summary){
 
   comments.box <- comments <- list()
   n.col <- 20
-  pal.fnc <- c("#E8EAED", "#C1E29E", "#55B762", "#FFC232")
+  pal.fnc <- c("#F2FAE8", "#C1E29E", "#55B762", "#FFC232")
   
   for (i in 1:tbl_count) {
     
@@ -158,9 +159,9 @@ if(include_summary){
   table.colours <- lapply(X = comments.box, FUN = function(x) purrr::map(.x = x, .f = ~pal.fnc[as.numeric(.x)]))
   
   # Print table legend
-  cat(paste0("\\mbox{No edits required \\hspace{5pt} \\textcolor[HTML]{",
-  gsub(pattern = "#", replacement = "", x = pal.fnc[1]), "}{\\rule{0.3cm}{0.3cm}}} \\hspace{5pt} \\mbox{Revised, as suggested \\hspace{5pt} \\textcolor[HTML]{", gsub(pattern = "#", replacement = "", x = pal.fnc[2]), "}{\\rule{0.3cm}{0.3cm}}} \\hspace{5pt} \\mbox{Revised, with additional edits \\hspace{5pt} \\textcolor[HTML]{",
-  gsub(pattern = "#", replacement = "", x = pal.fnc[3]), "}{\\rule{0.3cm}{0.3cm}}} \\mbox{No action taken \\hspace{5pt} \\textcolor[HTML]{", gsub(pattern = "#", replacement = "", x = pal.fnc[4]), "}{\\rule{0.3cm}{0.3cm}}} \\newline{} \\newline{}"))
+  cat(paste0("\\mbox{\\textcolor[HTML]{",
+  gsub(pattern = "#", replacement = "", x = pal.fnc[1]), "}{\\rule{0.3cm}{0.3cm}} \\hspace{2pt} No edits required} \\hspace{5pt} \\mbox{ \\textcolor[HTML]{", gsub(pattern = "#", replacement = "", x = pal.fnc[2]), "}{\\rule{0.3cm}{0.3cm}} \\hspace{2pt} Revised, as suggested} \\hspace{5pt} \\mbox{\\textcolor[HTML]{",
+  gsub(pattern = "#", replacement = "", x = pal.fnc[3]), "}{\\rule{0.3cm}{0.3cm}} \\hspace{2pt} Revised, with other edits} \\hspace{5pt}  \\mbox{\\textcolor[HTML]{", gsub(pattern = "#", replacement = "", x = pal.fnc[4]), "}{\\rule{0.3cm}{0.3cm}} \\hspace{2pt} No action taken} \\newline{} \\newline{}"))
   
   # Print table
   for (i in 1:tbl_count) {
@@ -225,7 +226,7 @@ for (i in 1:tbl_count) {
     if(header_names[i] %in% c("Editor", "Reviewer")) ind <- "" else ind <- c(seq_len(n_editors), seq_len(n_reviewers))[i]
     
     # Define line number if present
-    line_no <- paste0("L", tbl_txt[[i]][j, ]$line)
+    line_no <- ifelse(tbl_txt[[i]][j, ]$line == "", "", paste0("L", tbl_txt[[i]][j, ]$line))
     line_edits <- ifelse(tbl_txt[[i]][j, ]$line=="", "Edits", line_no)
     
     action_txt <- tbl_txt[[i]][j, ]$action
@@ -244,7 +245,10 @@ for (i in 1:tbl_count) {
        action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", action_txt, " +, ", tbl_txt[[i]][j, ]$extra, " \\checkmark")
        
     }else if(!tbl_txt[[i]][j, ]$action == "" & tbl_txt[[i]][j, ]$as_is %in% c("Yes", "yes", "YES", "true", "TRUE", "Y", "y", "") & !tbl_txt[[i]][j, ]$extra == ""){
-      action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", action_txt, " \\checkmark")}
+      action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", action_txt, " \\checkmark")
+    
+  }else if(!tbl_txt[[i]][j, ]$action == "" & tbl_txt[[i]][j, ]$as_is %in% c("Yes", "yes", "YES", "true", "TRUE", "Y", "y", "") & tbl_txt[[i]][j, ]$extra == ""){
+      action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", "\\normalfont Revised, as suggested", " \\checkmark")}
     
     # Identify changes in the revised text 
     if(tbl_txt[[i]][j, ]$txt_orig %in% c(not.applicable, "") & tbl_txt[[i]][j, ]$txt_revised %in% c(not.applicable, "")){
@@ -259,9 +263,9 @@ for (i in 1:tbl_count) {
       if(out == "") out <- paste0("\"", out, "\"")
       revised_txt <- paste0("\\color{midcolour}\\textbf{", line_edits, ": }", out)}
     
-    if(response_font == "bold") response_txt <- "\\bf \\underline{Response:} "
-    if(response_font == "italics") response_txt <- "\\underline{Response:} \\em "
-    if(response_font == "standard") response_txt <- "\\underline{Response:} "
+    if(response_font == "bold") response_txt <- "\\bf \\uline{Response:} "
+    if(response_font == "italics") response_txt <- "\\uline{Response:} \\em "
+    if(response_font == "standard") response_txt <- "\\uline{Response:} "
 
     if(comment_font == "standard") comment_txt <- paste0(substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, " ", tbl_txt[[i]]$comment[j])
     if(comment_font == "bold") comment_txt <- paste0("\\textbf{", substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, " ", tbl_txt[[i]]$comment[j], "}")

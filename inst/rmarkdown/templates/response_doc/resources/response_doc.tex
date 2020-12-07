@@ -18,6 +18,7 @@
 \usepackage{pifont}
 \usepackage{array}
 \usepackage{float}
+\usepackage{ulem}
 
 
 %==============================================
@@ -144,7 +145,7 @@ $endif$
 % Define a new command to abbreviate author names
 
 \title{$title$}
-\author{\bf{Authors:}$for(author)$\sf{ $author.familyname$ \abbre{$author.firstname$}}$sep$\and $endfor$}
+\author{\bf{Authors: }$for(author)$\sf{ $author.familyname$$if(author.firstname)$ \abbre{$author.firstname$}$endif$}$sep$\and$endfor$}
 \newcommand{\journal}{\textbf{Journal: }$journal$}
 \newcommand{\manuscript}{\textbf{Manuscript ID: }$manuscript$}
 

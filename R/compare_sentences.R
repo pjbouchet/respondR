@@ -42,7 +42,7 @@ compare_sentences <- function(sentence1,
   
   # Define LaTeX formatting command
   if(highlight_diff == "bold") highlight <- "\\textbf"
-  if(highlight_diff == "underline") highlight <- "\\underline"
+  if(highlight_diff == "underline") highlight <- "\\uline"
   if(highlight_diff == "italics") highlight <- "\\textit"
   if(highlight_diff == "standard") highlight <- "\\normalfont"
   
@@ -79,70 +79,23 @@ compare_sentences <- function(sentence1,
       return(output)
     }
 
-    # Construct output text
+    # Construct text
     sentence <- diff.df %>% 
       dplyr::rowwise(.) %>% 
       dplyr::mutate(text = to_latex(input = val, diff.type = op)) %>% 
       dplyr::pull(text)
-    
-    
-    # Identify differences and corresponding positions of words in the sentence  (use \\b to match whole words)
-    # The first element contains words that have been added
-    # The second contains words that have been removed
-    # diffWords <- list(added = setdiff(x = s2, y = s1), deleted = setdiff(x = s1, y = s2))
-    # # add.remove <- which.max(purrr::map_dbl(.x = diffWords, .f = ~length(.x)))
-    # add.remove <- purrr::map_dbl(.x = diffWords, .f = ~length(.x))
-    # 
-    # if(add.remove[2]==0 & add.remove[1]>0) diffWords <- diffWords[["added"]]
-    # if(add.remove[1]==0 & add.remove[2]>0) diffWords <- diffWords[["deleted"]]
-    # if(add.remove[2]==add.remove[1]) diffWords <- diffWords[["added"]]
-    # 
-    # if(class(diffWords)=="character") diffWords <- list(diffWords)
-    # 
-    # diffIndex <- purrr::map(.x = length(diffWords), 
-    #                         .f = ~sapply(X = diffWords[[.x]], 
-    #                                      FUN = function(w) 
-    #                                        {c(which(grepl(pattern = paste0("\\b", w, "\\b"), x = list(s2, s1)[[.x]])),
-    #                                           which(grepl(pattern = paste0("\\b", w, "\\b"), x = list(s1, s2)[[.x]])))}))
-    #       
-    # 
-    # 
-    # # if(add.remove == 1) diffIndex <- sapply(X = diffWords, FUN = function(w) which(grepl(pattern = paste0("\\b", w, "\\b"), x = sentence2)))
-    # # 
-    # # if(add.remove == 2) diffIndex <- sapply(X = diffWords, FUN = function(w) which(grepl(pattern = paste0("\\b", w, "\\b"), x = sentence1)))
-    # 
-    # diffIndex <-  purrr::map(.x = diffIndex, .f = ~ .x[which(!names(.x) =="")])
-    #              # diffIndex[[1]] <- diffIndex[[1]][which(!names(diffIndex[[1]]) =="")]
-    # 
-    # 
-    # # Reconstruct sentence
-    # # if(add.remove == 1){ 
-    #   sentence <- s2
-    #   # diffSeq <- seqle(diffIndex)
-    #   # sentence[diffIndex] <- paste0(highlight, "{", sentence[diffIndex], "}") 
-    #   
-    #   if(add.remove[1]>0) sentence[unlist(diffIndex)] <- paste0(highlight, "{", sentence[unlist(diffIndex)], "}") 
-    #   # if(length(diffIndex) > 1){
-    #   if(add.remove[2]>0){
-    #   dots <- unlist(diffIndex)
-    #   dots <- dots[which(dots < length(s1))]
-    #   sentence[dots] <- paste0(highlight, "{...} ", sentence[dots]) }
-   #  } else {
-   #    sentence <- sentence1
-   #    sentence[diffIndex] <- paste0(highlight, "{", "...", "}") 
-   #    }
-   #  
 
-
+    # Remove duplicate deletions (dot marks)
     sentence <- sentence[!sentence == ""]
     dots <- paste0("\\...")
     duplicate.dots <- rep(0, length(sentence))
     for(i in 2:length(sentence)){
       if(grepl(pattern = dots, x = sentence[i - 1]) & grepl(pattern = dots, x = sentence[i])){
         duplicate.dots[i] <- 1}}
+    
+    # Format final output
     sentence <- sentence[duplicate.dots == 0]
     sentence <- gsub(pattern = paste0("\\} \\\\", highlight_strip, "\\{"), " ", paste0(sentence, collapse = " "))
-    
     sentence <- qdapRegex::rm_white(sentence) # Remove white spaces
     
     return(sentence)
