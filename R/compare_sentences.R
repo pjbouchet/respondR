@@ -132,12 +132,17 @@ compare_sentences <- function(sentence1,
    #    sentence[diffIndex] <- paste0(highlight, "{", "...", "}") 
    #    }
    #  
-   #  dots <- paste0(highlight_diff, "\\{", "...", "\\}") 
-   #  duplicate.dots <- c()
-   #  for(i in 2:length(sentence)) if(grepl(dots, sentence[i - 1]) & grepl(dots, sentence[i])) duplicate.dots <- c(duplicate.dots, i)
-   # if(!is.null(duplicate.dots)) sentence <- sentence[-duplicate.dots]
+
+
     sentence <- sentence[!sentence == ""]
+    dots <- paste0("\\...")
+    duplicate.dots <- rep(0, length(sentence))
+    for(i in 2:length(sentence)){
+      if(grepl(pattern = dots, x = sentence[i - 1]) & grepl(pattern = dots, x = sentence[i])){
+        duplicate.dots[i] <- 1}}
+    sentence <- sentence[duplicate.dots == 0]
     sentence <- gsub(pattern = paste0("\\} \\\\", highlight_strip, "\\{"), " ", paste0(sentence, collapse = " "))
+    
     sentence <- qdapRegex::rm_white(sentence) # Remove white spaces
     
     return(sentence)
