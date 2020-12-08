@@ -58,6 +58,9 @@ compare_sentences <- function(sentence1,
     
   }else{
     
+    sentence2 <- gsub(pattern = "e.g.", replacement = "eg", x = sentence2)
+    sentence2 <- gsub(pattern = "i.e.", replacement = "ie", x = sentence2)
+    
     # Break sentences up 
     s1 <- unlist(strsplit(sentence1,"[[:space:]]|(?=[.,;!?])", perl = TRUE))
     s2 <- unlist(strsplit(sentence2,"[[:space:]]|(?=[.,;!?])", perl = TRUE))
@@ -67,9 +70,13 @@ compare_sentences <- function(sentence1,
     
     # Identify replacements as two consecutive rows marked "Delete" and "Insert" respectively 
     # Mark the first as NA to avoid redundancies
-    for(r in 1:(nrow(diff.df) - 1)){
+    if(nrow(diff.df) == 1) N <- 2 else N <- nrow(diff.df)
+    for(r in 1:(N - 1)){
       if(diff.df$op[r] ==  "Delete" & diff.df$op[r + 1] == "Insert") diff.df$op[r] <- NA}
     diff.df <- diff.df[!is.na(diff.df$op), ]
+    diff.df <- diff.df %>% dplyr::filter(!val == "")
+    diff.df$val <- gsub(pattern = "eg", "e.g.", x = diff.df$val)
+    diff.df$val <- gsub(pattern = "ie", "i.e.", x = diff.df$val)
     
     # Function to assign the correct LaTeX formatting
     to_latex <- function(input, diff.type){
