@@ -8,7 +8,8 @@ compare_sentences(
   sentence1,
   sentence2,
   highlight_diff = "underline",
-  NA.string = not.applicable
+  NA.string = c("n/a", "na", "N/A", "NA", "Not applicable", "not applicable",
+    "Not Applicable")
 )
 }
 \arguments{

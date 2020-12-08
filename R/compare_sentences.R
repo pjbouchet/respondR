@@ -67,7 +67,7 @@ compare_sentences <- function(sentence1,
     
     # Identify replacements as two consecutive rows marked "Delete" and "Insert" respectively 
     # Mark the first as NA to avoid redundancies
-    for(r in 1:nrow(diff.df)){
+    for(r in 1:(nrow(diff.df) - 1)){
       if(diff.df$op[r] ==  "Delete" & diff.df$op[r + 1] == "Insert") diff.df$op[r] <- NA}
     diff.df <- diff.df[!is.na(diff.df$op), ]
     
