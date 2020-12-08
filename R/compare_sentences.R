@@ -105,7 +105,7 @@ compare_sentences <- function(sentence1,
     sentence <- sentence[duplicate.dots == 0]
     sentence <- gsub(pattern = paste0("\\} \\\\", highlight_strip, "\\{"), " ", paste0(sentence, collapse = " "))
     sentence <- qdapRegex::rm_white(sentence) # Remove white spaces
-    sentence <- gsub(pattern = "%", replacement = "\%", x = sentence)
+    sentence <- gsub(pattern = "%", replacement = "\\%", x = sentence)
     
     return(sentence)
   }
