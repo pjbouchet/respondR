@@ -225,12 +225,14 @@ for (i in 1:tbl_count) {
     # Define header
     if(header_names[i] %in% c("Editor", "Reviewer")) ind <- "" else ind <- c(seq_len(n_editors), seq_len(n_reviewers))[i]
     
-    # Define line number if present
-    line_no <- ifelse(tbl_txt[[i]][j, ]$line == "", "", paste0("L", tbl_txt[[i]][j, ]$line))
-    # line_edits <- ifelse(tbl_txt[[i]][j, ]$line=="", "Edits", line_no)
-    line_edits <- ifelse(tbl_txt[[i]][j, ]$line=="", "Edits", line_no)
-    
-    action_txt <- tbl_txt[[i]][j, ]$action
+   # Retrieve line number if present
+    line_no_numeric <- ifelse(gsub("[^0-9.-]", "", tbl_txt[[i]][j, ]$line)=="", FALSE, TRUE)
+    if(line_no_numeric){
+      line_no <- paste0("L", tbl_txt[[i]][j, ]$line, ". ") 
+      } else {
+        if(tbl_txt[[i]][j, ]$line == "") line_no <- "" else line_no <- paste0(tbl_txt[[i]][j, ]$line, ". ")}
+
+    line_edits <- "Edits"
     
     # List action taken in response to reviewer comment
     if(tbl_txt[[i]][j, ]$action %in% not.applicable){
@@ -268,6 +270,7 @@ for (i in 1:tbl_count) {
     if(response_font == "italics") response_txt <- "\\uline{Response:} \\em "
     if(response_font == "standard") response_txt <- "\\uline{Response:} "
 
+    # Parse reviewer comments
     if(comment_font == "standard") comment_txt <- paste0(substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, ". ", tbl_txt[[i]]$comment[j])
     if(comment_font == "bold") comment_txt <- paste0("\\textbf{", substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, ". ", tbl_txt[[i]]$comment[j], "}")
     if(comment_font == "italics") comment_txt <- paste0("\\textit{", substr(header_names[i], 1, 1), ind, ".", j, " | ", line_no, ". ", tbl_txt[[i]]$comment[j], "}")
