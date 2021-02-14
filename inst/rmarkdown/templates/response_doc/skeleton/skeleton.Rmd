@@ -236,25 +236,41 @@ for (i in 1:tbl_count) {
     
     # List action taken in response to reviewer comment
     if(tbl_txt[[i]][j, ]$action %in% not.applicable){
+      
       action_txt <- paste0("\\color{noaction} \\textbf{Action: }", text_unchanged, " \\xmark")
       
     }else if(tbl_txt[[i]][j, ]$action == ""){
+      
       action_txt <- paste0("\\color{midcolour} \\textbf{Action: }No edits required \\checkmark")
       
-    }else if(!tbl_txt[[i]][j, ]$action == "" & tbl_txt[[i]][j, ]$as_is %in% c("No", "no", "N", "NO", "FALSE", "false") & tbl_txt[[i]][j, ]$extra == ""){
+    }else if(!tbl_txt[[i]][j, ]$action == "" & 
+             tbl_txt[[i]][j, ]$as_is %in% c("No", "no", "N", "NO", "FALSE", "false") &
+             tbl_txt[[i]][j, ]$extra == ""){
+      
        action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", action_txt, ", with additional edits \\checkmark")
        
-    }else if(!tbl_txt[[i]][j, ]$action == "" & tbl_txt[[i]][j, ]$as_is %in% c("No", "no", "N", "NO", "FALSE", "false") & !tbl_txt[[i]][j, ]$extra == ""){
+    }else if(!tbl_txt[[i]][j, ]$action == "" &
+             tbl_txt[[i]][j, ]$as_is %in% c("No", "no", "N", "NO", "FALSE", "false") &
+             !tbl_txt[[i]][j, ]$extra == ""){
+      
        action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", action_txt, " +, ", tbl_txt[[i]][j, ]$extra, " \\checkmark")
        
-    }else if(!tbl_txt[[i]][j, ]$action == "" & tbl_txt[[i]][j, ]$as_is %in% c("Yes", "yes", "YES", "true", "TRUE", "Y", "y", "") & !tbl_txt[[i]][j, ]$extra == ""){
+    }else if(!tbl_txt[[i]][j, ]$action == "" & 
+             tbl_txt[[i]][j, ]$as_is %in% c("Yes", "yes", "YES", "true", "TRUE", "Y", "y", "") &
+             !tbl_txt[[i]][j, ]$extra == ""){
+      
       action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", action_txt, " \\checkmark")
     
-  }else if(!tbl_txt[[i]][j, ]$action == "" & tbl_txt[[i]][j, ]$as_is %in% c("Yes", "yes", "YES", "true", "TRUE", "Y", "y", "") & tbl_txt[[i]][j, ]$extra == ""){
+  }else if(!tbl_txt[[i]][j, ]$action == "" & 
+           tbl_txt[[i]][j, ]$as_is %in% c("Yes", "yes", "YES", "true", "TRUE", "Y", "y", "") &
+           tbl_txt[[i]][j, ]$extra == ""){
+    
       action_txt <- paste0("\\color{midcolour} \\textbf{Action: }", "\\normalfont Revised, as suggested", " \\checkmark")}
     
     # Identify changes in the revised text 
-    if(tbl_txt[[i]][j, ]$txt_orig %in% c(not.applicable, "") & tbl_txt[[i]][j, ]$txt_revised %in% c(not.applicable, "")){
+    if(tbl_txt[[i]][j, ]$txt_orig %in% c(not.applicable, "") &
+       tbl_txt[[i]][j, ]$txt_revised %in% c(not.applicable, "")){
+      
       revised_txt <- "\\vspace{-15pt}"
       
     }else{ 
