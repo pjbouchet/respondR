@@ -76,8 +76,8 @@ compare_sentences <- function(sentence1,
       if(diff.df$op[r] ==  "Delete" & diff.df$op[r + 1] == "Insert") diff.df$op[r] <- NA}
     diff.df <- diff.df[!is.na(diff.df$op), ]
     diff.df <- diff.df %>% dplyr::filter(!val == "")
-    diff.df$val <- gsub(pattern = "eg", "e.g.", x = diff.df$val)
-    diff.df$val <- gsub(pattern = "ie", "i.e.", x = diff.df$val)
+    if(nrow(dplyr::filter(diff.df, val == "eg")) > 0) diff.df[diff.df$val == "eg",]$val <- "e.g."
+    if(nrow(dplyr::filter(diff.df, val == "ie")) > 0) diff.df[diff.df$val == "ie",]$val <- "i.e."
     
     # Function to assign the correct LaTeX formatting
     to_latex <- function(input, diff.type){
