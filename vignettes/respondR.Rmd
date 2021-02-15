@@ -70,23 +70,51 @@ This will generate a Microsoft Word document entitled `response_template.docx` i
 
 The Word template consists of several tables, to be filled in by the authors.
 
-Each table corresponds to either an **Editor** or a **Reviewer**. By default, `respondR` assumes that the article was handled by a single editor and two reviewers (meaning a total of three tables). The table type is indicated in the header of the left-most column. Tables can be copied/pasted or deleted as necessary to match the correct number of editors/reviewers on a specific article.
+Each table corresponds to either an **Editor** or a **Reviewer**. By default, `respondR` assumes that the article was handled by a single editor and two reviewers (i.e., a total of three tables). The table type is indicated in the header of the left-most column. Tables can be copied/pasted or deleted as necessary to match the correct number of editors/reviewers on a specific article.
 
-The three main columns of each table are:
+Each table consists of the following columns:
+
+-   **Line**: Line number, where applicable.
+
+<!-- -->
 
 -   **Comment**: Reviewer comments.
 
 -   **Response**: Response(s) to reviewer comments.
 
--   **Action**: Action(s) taken to address reviewer comments.\
+-   **Action**: Action(s) taken to address reviewer comments.
 
-    -   When no edits are required, leave this column blank.\
-    -   Set to `n/a`, `na`, `N/A`, `NA`, `Not applicable`, `not applicable`, or `Not Applicable` when the manuscript text has purposefully been left unchanged (e.g., because the authors disagree with a suggested edit).
+-   **As_is:** Indicates whether or not the changes made follow the reviewer's suggestion. If so, leave the cell blank or use any of following terms: "Yes", "yes", "YES", "true", "TRUE", "Y", "y". If not, use "No", "no", "N", "NO", "FALSE" or "false".
+
+-   **Extra:** Any additional/alternative edits made.
+
+The below illustrates the range of outputs produced by `respondR` for different combinations of entries:
+
++----------------+------------------------------+------------------------+--------------------------------------------+
+| Action         | As_is                        | Extra                  | PDF output                                 |
++================+==============================+========================+============================================+
+| `<blank>`      | `<blank>`                    | `<blank>`              | No edits required ✓                        |
++----------------+------------------------------+------------------------+--------------------------------------------+
+| `NA` ^**(1)**^ | `<blank>`                    | `<blank>`              | No action taken (text unchanged) x         |
++----------------+------------------------------+------------------------+--------------------------------------------+
+| Revised        | `<blank>` or `yes` ^**(2)**^ | `<blank>`              | Revised, as suggested ✓                    |
++----------------+------------------------------+------------------------+--------------------------------------------+
+| Revised        | `No` ^**(3)**^               | `<blank>`              | Revised, with additional edits ✓           |
++----------------+------------------------------+------------------------+--------------------------------------------+
+| Revised        | `No` ^**(3)**^               | e.g., updated metadata | Revised + updated metadata ✓               |
++----------------+------------------------------+------------------------+--------------------------------------------+
+| Revised        | `<blank>` or `yes` ^**(2)**^ | e.g., updated metadata | Revised, as suggested + updated metadata ✓ |
++----------------+------------------------------+------------------------+--------------------------------------------+
+
+^**(1)**^ or: `n/a`, `na`, `N/A`, `Not applicable`, `not applicable`, `Not Applicable`
+
+^**(2)**^ or: `Yes`, `yes`, `YES`, `Y`, `y`, `true`, `TRUE`
+
+^**(3)**^ or: `no`, `N`, `NO`, `FALSE`, `false`\
 
 `respondR` also contains functions to compare text excerpts and identify differences between them. This can be used to highlight revisions made on specific sentences or paragraphs.
 
 -   **Txt_orig**: Original text as it appeared in the submitted draft.
--   **Line**: Line number.
 -   **Txt_revised**: Revised text.
 
 Finally, the last table in the template is a single-column table used for referencing, should any literature be cited within the response document. If none are used, this table should be left blank. Users are free to rely on any Word-compatible reference management software of their choosing (e.g., Mendeley, Endnote, Zotero, PaperPile). Note, however, that references must be flattened before knitting, as reference fields will otherwise be imported as text and will mess with the output.
