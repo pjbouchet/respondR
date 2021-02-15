@@ -59,8 +59,8 @@ compare_sentences <- function(sentence1,
   }else{
     
     # Special characters
-    sentence2 <- gsub(pattern = "e.g.", replacement = "eg", x = sentence2)
-    sentence2 <- gsub(pattern = "i.e.", replacement = "ie", x = sentence2)
+    sentence2 <- gsub(pattern = "e.g.", replacement = "eg", x = sentence2, fixed = TRUE)
+    sentence2 <- gsub(pattern = "i.e.", replacement = "ie", x = sentence2, fixed = TRUE)
     
     # Break sentences up 
     s1 <- unlist(strsplit(sentence1,"[[:space:]]|(?=[.,;!?])", perl = TRUE))
