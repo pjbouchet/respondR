@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">respondR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
       <h1 data-toc-skip>Getting started with respondR</h1>
                         <h4 class="author">Phil J. Bouchet</h4>
             <address class="author_afil">
-      Centre for Research into Ecological &amp; Environmental Modelling, University of St Andrews<br><h4 class="date">2020-10-31</h4>
+      Centre for Research into Ecological &amp; Environmental Modelling, University of St Andrews<br><h4 class="date">2021-02-15</h4>
       
       
       <div class="hidden name"><code>respondR.Rmd</code></div>
@@ -130,26 +130,89 @@
 <h2 class="hasAnchor">
 <a href="#writing-responses" class="anchor"></a>Writing responses</h2>
 <p>The Word template consists of several tables, to be filled in by the authors.</p>
-<p>Each table corresponds to either an <strong>Editor</strong> or a <strong>Reviewer</strong>. By default, <code>respondR</code> assumes that the article was handled by a single editor and two reviewers (meaning a total of three tables). The table type is indicated in the header of the left-most column. Tables can be copied/pasted or deleted as necessary to match the correct number of editors/reviewers on a specific article.</p>
-<p>The three main columns of each table are:</p>
+<p>Each table corresponds to either an <strong>Editor</strong> or a <strong>Reviewer</strong>. By default, <code>respondR</code> assumes that the article was handled by a single editor and two reviewers (i.e., a total of three tables). The table type is indicated in the header of the left-most column. Tables can be copied/pasted or deleted as necessary to match the correct number of editors/reviewers on a specific article.</p>
+<p>Each table consists of the following columns:</p>
 <ul>
+<li>
+<strong>Line</strong>: Line number, where applicable.</li>
+</ul>
+<!-- --><ul>
 <li><p><strong>Comment</strong>: Reviewer comments.</p></li>
 <li><p><strong>Response</strong>: Response(s) to reviewer comments.</p></li>
-<li>
-<p><strong>Action</strong>: Action(s) taken to address reviewer comments.<br></p>
-<ul>
-<li>When no edits are required, leave this column blank.<br>
-</li>
-<li>Set to <code>n/a</code>, <code>na</code>, <code>N/A</code>, <code>NA</code>, <code>Not applicable</code>, <code>not applicable</code>, or <code>Not Applicable</code> when the manuscript text has purposefully been left unchanged (e.g., because the authors disagree with a suggested edit).</li>
+<li><p><strong>Action</strong>: Action(s) taken to address reviewer comments.</p></li>
+<li><p><strong>As_is:</strong> Indicates whether or not the changes made follow the reviewer’s suggestion. If so, leave the cell blank or use any of following terms: “Yes”, “yes”, “YES”, “true”, “TRUE”, “Y”, “y”. If not, use “No”, “no”, “N”, “NO”, “FALSE” or “false”.</p></li>
+<li><p><strong>Extra:</strong> Any additional/alternative edits made.</p></li>
 </ul>
-</li>
-</ul>
+<p>The below illustrates the range of outputs produced by <code>respondR</code> for different combinations of entries:</p>
+<table class="table">
+<colgroup>
+<col width="14%">
+<col width="26%">
+<col width="21%">
+<col width="38%">
+</colgroup>
+<thead><tr class="header">
+<th>Action</th>
+<th>As_is</th>
+<th>Extra</th>
+<th>PDF output</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;blank&gt;</code></td>
+<td><code>&lt;blank&gt;</code></td>
+<td><code>&lt;blank&gt;</code></td>
+<td>No edits required ✓</td>
+</tr>
+<tr class="even">
+<td>
+<code>NA</code> <sup><strong>(1)</strong></sup>
+</td>
+<td><code>&lt;blank&gt;</code></td>
+<td><code>&lt;blank&gt;</code></td>
+<td>No action taken (text unchanged) x</td>
+</tr>
+<tr class="odd">
+<td>Revised</td>
+<td>
+<code>&lt;blank&gt;</code> or <code>yes</code> <sup><strong>(2)</strong></sup>
+</td>
+<td><code>&lt;blank&gt;</code></td>
+<td>Revised, as suggested ✓</td>
+</tr>
+<tr class="even">
+<td>Revised</td>
+<td>
+<code>No</code> <sup><strong>(3)</strong></sup>
+</td>
+<td><code>&lt;blank&gt;</code></td>
+<td>Revised, with additional edits ✓</td>
+</tr>
+<tr class="odd">
+<td>Revised</td>
+<td>
+<code>No</code> <sup><strong>(3)</strong></sup>
+</td>
+<td>e.g., updated metadata</td>
+<td>Revised + updated metadata ✓</td>
+</tr>
+<tr class="even">
+<td>Revised</td>
+<td>
+<code>&lt;blank&gt;</code> or <code>yes</code> <sup><strong>(2)</strong></sup>
+</td>
+<td>e.g., updated metadata</td>
+<td>Revised, as suggested + updated metadata ✓</td>
+</tr>
+</tbody>
+</table>
+<p><sup><strong>(1)</strong></sup> or: <code>n/a</code>, <code>na</code>, <code>N/A</code>, <code>Not applicable</code>, <code>not applicable</code>, <code>Not Applicable</code></p>
+<p><sup><strong>(2)</strong></sup> or: <code>Yes</code>, <code>yes</code>, <code>YES</code>, <code>Y</code>, <code>y</code>, <code>true</code>, <code>TRUE</code></p>
+<p><sup><strong>(3)</strong></sup> or: <code>no</code>, <code>N</code>, <code>NO</code>, <code>FALSE</code>, <code>false</code><br></p>
 <p><code>respondR</code> also contains functions to compare text excerpts and identify differences between them. This can be used to highlight revisions made on specific sentences or paragraphs.</p>
 <ul>
 <li>
 <strong>Txt_orig</strong>: Original text as it appeared in the submitted draft.</li>
-<li>
-<strong>Line</strong>: Line number.</li>
 <li>
 <strong>Txt_revised</strong>: Revised text.</li>
 </ul>

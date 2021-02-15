@@ -1,7 +1,7 @@
 Package: respondR
 Type: Package
 Title: R Markdown Template for Responses to Reviewers
-Version: 0.1.0
+Version: 1.0.0
 Author: person("Phil", "Bouchet", , "pjbouchet@gmail.com", c("aut", "cre"))
 Maintainer: Phil Bouchet <pjbouchet@gmail.com>
 Description: This package provides an R Markdown template for writing responses to reviewers' comments on a submitted paper.
