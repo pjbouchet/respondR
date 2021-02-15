@@ -1,5 +1,10 @@
 ## RMarkdown template for responses to peer-review comments <img src="https://github.com/pjbouchet/respondR/blob/main/hex/respondR-hex.png?raw=true" class="logo" height="200" align="right"/>
 
+<!-- badges: start -->
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg?style=flat-square)](https://www.tidyverse.org/lifecycle/#maturing)
+[![DOI](https://img.shields.io/badge/DOI-10.5281.zenodo.4541222-green.svg?style=flat-square)](https://doi.org/10.5281/zenodo.4541222) 
+<!-- badges: end -->
+
 This package provides an Rmarkdown template for writing clear, professional-looking and consistently formatted responses to peer-review comments on scientific papers.
 
 ### Rationale
