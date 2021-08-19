@@ -37,7 +37,7 @@ editor_options:
 classoption: table
 ---
 
-The work presented in our manuscript is the reflection of a strongly collaborative effort from numerous partner institutions (and individuals) over multiple years, and we are very pleased that both reviewers deemed it to be of value. We are grateful to them for their critical evaluation of the paper and the positive and constructive feedback they provided. Our responses to each of their individual comments are shown below. Note that line numbers refer to the original submission, not the revised manuscript.
+We are very pleased to have received such positive feedback on our work and are grateful to both reviewers for their critical evaluation of the paper. Our responses to each of their individual comments are shown in bold font below. Edits made to the manuscript are indicated in blue: additions are underlined and deletions denoted by "...". Note that line numbers refer to the original submission, rather than the revised manuscript.
 
 ```{r include=FALSE}
 # Can be customised
@@ -82,17 +82,45 @@ tbl_count <- docxtractr::docx_tbl_count(docx = doc)
 
 # Extract table content
 tbl_txt <- purrr::map(.x = 1:tbl_count, .f = ~
-                        docxtractr::docx_extract_tbl(docx = doc, tbl_number = .x, header = TRUE) %>% 
+                        docxtractr::docx_extract_tbl(docx = doc, tbl_number = .x, header = TRUE, preserve = TRUE) %>% 
                         janitor::clean_names(.))
 
-# Deal with special characters
+# Deal with special characters like ampersand and dollar signs
 for(p in 1:(tbl_count - 1)){
   for(pp in 1:nrow(tbl_txt[[p]])){
+    
+    # Ampersand
     tbl_txt[[p]]$comment[pp] <- str_replace_all(string = tbl_txt[[p]]$comment[pp], 
-                                                pattern = "&", replacement = "and")
+                                                pattern = "\\&", replacement = "\\\\&")
     tbl_txt[[p]]$response[pp] <- str_replace_all(string = tbl_txt[[p]]$response[pp], 
-                                                pattern = "&", replacement = "and")}}
-
+                                                pattern = "\\&", replacement = "\\\\&")
+    tbl_txt[[p]]$txt_orig[pp] <- str_replace_all(string = tbl_txt[[p]]$txt_orig[pp], 
+                                                pattern = "\\&", replacement = "\\\\&")
+    tbl_txt[[p]]$txt_revised[pp] <- str_replace_all(string = tbl_txt[[p]]$txt_revised[pp], 
+                                                pattern = "\\&", replacement = "\\\\&")
+    
+    # Dollar sign
+    tbl_txt[[p]]$comment[pp] <- str_replace_all(string = tbl_txt[[p]]$comment[pp], 
+                                                pattern = "\\$", replacement = "\\\\$")
+    tbl_txt[[p]]$response[pp] <- str_replace_all(string = tbl_txt[[p]]$response[pp], 
+                                                pattern = "\\$", replacement = "\\\\$")
+    tbl_txt[[p]]$txt_orig[pp] <- str_replace_all(string = tbl_txt[[p]]$txt_orig[pp], 
+                                                pattern = "\\$", replacement = "\\\\$")
+    tbl_txt[[p]]$txt_revised[pp] <- str_replace_all(string = tbl_txt[[p]]$txt_revised[pp], 
+                                                pattern = "\\$", replacement = "\\\\$")
+    
+        # Dollar sign
+    tbl_txt[[p]]$comment[pp] <- str_replace_all(string = tbl_txt[[p]]$comment[pp], 
+                                                pattern = "\\%", replacement = "\\\\%")
+    tbl_txt[[p]]$response[pp] <- str_replace_all(string = tbl_txt[[p]]$response[pp], 
+                                                pattern = "\\%", replacement = "\\\\%")
+    tbl_txt[[p]]$txt_orig[pp] <- str_replace_all(string = tbl_txt[[p]]$txt_orig[pp], 
+                                                pattern = "\\%", replacement = "\\\\%")
+    tbl_txt[[p]]$txt_revised[pp] <- str_replace_all(string = tbl_txt[[p]]$txt_revised[pp], 
+                                                pattern = "\\%", replacement = "\\\\%")
+    
+    }
+  }
 # If the references table exists, need to lower the table count
 name_last <- names(tbl_txt[[tbl_count]][1])
 
@@ -225,8 +253,13 @@ for (i in 1:tbl_count) {
     # Define header
     if(header_names[i] %in% c("Editor", "Reviewer")) ind <- "" else ind <- c(seq_len(n_editors), seq_len(n_reviewers))[i]
     
-   # Retrieve line number if present
-    line_no_numeric <- ifelse(gsub("[^0-9.-]", "", tbl_txt[[i]][j, ]$line)=="", FALSE, TRUE)
+    # Retrieve line numbers if present
+   if(grepl(pattern = "Figure", ignore.case = TRUE, x = tbl_txt[[i]][j, ]$line) |
+       grepl(pattern = "Table", ignore.case = TRUE, x = tbl_txt[[i]][j, ]$line)){
+      line_no_numeric <- FALSE
+    } else {  
+      line_no_numeric <- ifelse(gsub("[^0-9.-]", "", tbl_txt[[i]][j, ]$line)=="", FALSE, TRUE)
+    }
     if(line_no_numeric){
       line_no <- paste0("L", tbl_txt[[i]][j, ]$line, ". ") 
       } else {
@@ -293,6 +326,12 @@ for (i in 1:tbl_count) {
                                highlight_diff = highlight_textrevisions)
       
       if(out == "") out <- paste0("\"", out, "\"")
+      
+      out <- gsub(pattern = " ,", replacement = ",", x = out)
+      out <- gsub(pattern = " \\.", replacement = "\\.", x = out)
+      out <- gsub(pattern = "\\(ie", replacement = "(i.e.", x = out)
+      out <- gsub(pattern = "\\(eg", replacement = "(e.g.", x = out)
+      
       revised_txt <- paste0("\\color{midcolour}\\textbf{", line_edits, ": }", out)}
     
     if(response_font == "bold") response_txt <- "\\bf \\uline{Response:} "
@@ -326,9 +365,12 @@ for (i in 1:tbl_count) {
     
 # Print bibliography 
 if(!is.null(biblio)){
-  bibrefs <- data.frame(biblio)[1, 1]
+  bibrefs <- biblio$references
+  bibrefs <- stringr::str_replace_all(string = bibrefs, "\n", "\\\\par ")
+  bibrefs <- stringr::str_sub(bibrefs, 6, nchar(bibrefs))
   cat(paste0("\\textbf{References} "))
   cat("\\vspace{5pt}")
   cat("\\newline ")
-  cat(paste0(bibrefs))}
+  cat(paste0(bibrefs))
+  }
 ```
